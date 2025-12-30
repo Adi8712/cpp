@@ -1,0 +1,19 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+---
+Language: Cpp
+ColumnLimit: 100
+DerivePointerAlignment: false
+PointerAlignment: Left
+UseTab: Always
+BreakBeforeBraces: Attach
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AllowAllParametersOfDeclarationOnNextLine: true
+SortIncludes: true
+ReflowComments: true
+SpacesBeforeTrailingComments: 1
+BreakConstructorInitializers: BeforeComma
+AllowShortIfStatementsOnASingleLine: true
+CommentPragmas: None
