@@ -23,19 +23,12 @@
 #define DOMAIN AF_INET
 #define SOCKTYPE SOCK_DGRAM
 #define PROTOCOL 0
-#define ADDRESS INADDR_ANY
-#define PORT htons(8080)
+// #define ADDRESS INADDR_ANY
+// #define PORT htons(8080)
 #define LISTEN_BACKLOG 50
 
 namespace core {
     extern std::atomic<bool> run;
-    
-    class Handler {
-        private:
-        
-        public:
-            static inline void error(int macro);
-    };
     
     class MySocket {
         private:
@@ -43,9 +36,9 @@ namespace core {
             struct sockaddr_in addr;
         
         public:
-            MySocket(int domain, sa_family_t type);
+            MySocket(int, sa_family_t, in_port_t, in_addr_t);
             void listener();
-            void sender(std::string msg);
+            void sender(std::string);
             ~MySocket();
     };
 }

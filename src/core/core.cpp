@@ -14,7 +14,7 @@
 namespace core {
     std::atomic<bool> run(true);
     
-    MySocket::MySocket(int family, sa_family_t type) {
+    MySocket::MySocket(int family, sa_family_t type, in_port_t port, in_addr_t address) {
         if (type != SOCK_DGRAM) {
             LOGGER(ERR_NOT_UDP);
         }
@@ -25,8 +25,8 @@ namespace core {
         }
 
         addr.sin_family = DOMAIN;
-        addr.sin_port = PORT;
-        addr.sin_addr.s_addr = ADDRESS;        
+        addr.sin_port = port;
+        addr.sin_addr.s_addr = address;        
     }
 
     void MySocket::listener() {

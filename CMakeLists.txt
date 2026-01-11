@@ -15,7 +15,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(syncnode src/core/core.cpp src/app/main.cpp)
+add_executable(syncnode src/utils/utils.cpp src/core/core.cpp src/app/main.cpp)
 
 target_include_directories(syncnode PRIVATE src)
 
