@@ -17,13 +17,13 @@ namespace utils {
     
     namespace {    
         struct Target {
-            in_addr_t addr = INADDR_LOOPBACK;
-            in_port_t port = htons(8080);
+            in_addr_t addr;
+            in_port_t port;
         };
     }
     
     struct Config {
-        std::optional<in_port_t> listen_port = htons(8080);
+        std::optional<in_port_t> listen_port;
         std::optional<Target> send_to;
         
         ProgStat status;

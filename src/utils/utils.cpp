@@ -1,5 +1,6 @@
 #include "utils.hpp"
 #include <arpa/inet.h>
+#include <cstdint>
 #include <netinet/in.h>
 #include <stdexcept>
 #include <string>
@@ -19,7 +20,7 @@ namespace utils {
                 handler("Invalid port");
             }
             
-            return htons(n);
+            return htons((uint16_t)n);
         }
         
         in_addr_t parse_addr(std::string s) {
@@ -45,7 +46,7 @@ namespace utils {
                 cfg_.listen_port = parse_port(args[++i]);
             }
             if (arg == "--send") {
-                if ((i + 1) || (i + 2) >= length) {
+                if ((i + 2) >= length) {
                     handler();
                 }
                 
