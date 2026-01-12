@@ -1,13 +1,17 @@
 #pragma once
 
 #include <atomic>
+#include <bits/sockaddr.h>
 #include <cerrno>
+#include <chrono>
 #include <cstdint>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <netinet/in.h>
-#include <bits/sockaddr.h>
 #include <string>
 #include <sys/socket.h>
+#include <unistd.h>
 
 #define ERR_NOT_UDP -1
 #define ERR_SOCKET -2
@@ -23,8 +27,6 @@
 #define DOMAIN AF_INET
 #define SOCKTYPE SOCK_DGRAM
 #define PROTOCOL 0
-// #define ADDRESS INADDR_ANY
-// #define PORT htons(8080)
 #define LISTEN_BACKLOG 50
 
 namespace core {
@@ -38,7 +40,7 @@ namespace core {
         public:
             MySocket(int, sa_family_t, in_port_t, in_addr_t);
             void listener();
-            void sender(std::string);
+            void sender(const std::string);
             ~MySocket();
     };
 }

@@ -45,7 +45,7 @@ namespace utils {
                 
                 cfg_.listen_port = parse_port(args[++i]);
             }
-            if (arg == "--send") {
+            else if (arg == "--send") {
                 if ((i + 2) >= length) {
                     handler();
                 }
