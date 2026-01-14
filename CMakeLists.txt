@@ -22,5 +22,5 @@ target_include_directories(syncnode PRIVATE src)
 target_compile_options(syncnode
    PRIVATE
    -Wall -Wextra -Wpedantic -Wshadow -Wconversion
-   $<$<CONFIG:DEBUG>:-g>
+   $<$<CONFIG:Debug>:-g>
    $<$<CONFIG:Release>:-O3>)

@@ -15,7 +15,7 @@ namespace utils {
         BOTH
     };
     
-    namespace {    
+    namespace {
         struct Target {
             in_addr_t addr;
             in_port_t port;
