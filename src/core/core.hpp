@@ -1,16 +1,19 @@
 #pragma once
 
-#include <atomic>
+#include <algorithm>
 #include <bits/sockaddr.h>
 #include <cerrno>
 #include <chrono>
+#include <condition_variable>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <mutex>
 #include <netinet/in.h>
 #include <string>
 #include <sys/socket.h>
+#include <thread>
 #include <unistd.h>
 
 #define ERR_NOT_UDP -1
@@ -30,17 +33,18 @@
 #define LISTEN_BACKLOG 50
 
 namespace core {
-    extern std::atomic<bool> run;
-    
     class MySocket {
         private:
             int sfd;
             struct sockaddr_in addr;
-        
+
         public:
+            static std::mutex mtx;
+            static std::condition_variable cv;
+            static bool run;
             MySocket(int, sa_family_t, in_port_t, in_addr_t);
             void listener();
-            void sender(const std::string);
+            void sender();
             ~MySocket();
     };
 }
