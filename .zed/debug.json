@@ -1,0 +1,14 @@
+[
+    {
+        "label": "Debugger",
+        "build": {
+            "command": "./make.sh",
+            "args": ["1"],
+            "cwd": "$ZED_WORKTREE_ROOT"
+        },
+        "program": "$ZED_WORKTREE_ROOT/build/Debug/syncnode",
+        "args": ["--listen", "8000", "--send", "0.0.0.0", "8000"],
+        "request": "launch",
+        "adapter": "CodeLLDB"
+    }
+]
