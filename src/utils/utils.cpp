@@ -9,7 +9,8 @@
 
 namespace utils {
     namespace {
-        void handler(std::string s = "Invalid arguements") {
+        // generic handler for user args
+        void handler(std::string s = "Invalid arguments") {
             throw std::invalid_argument(s);
         }
 
@@ -40,14 +41,14 @@ namespace utils {
 
             if (arg == "--listen") {
                 if ((i + 1) >= length) {
-                    handler();
+                    handler("listen can't have more than 1 args");
                 }
 
                 cfg_.listen_port = parse_port(args[++i]);
             }
             else if (arg == "--send") {
                 if ((i + 2) >= length) {
-                    handler();
+                    handler("send can't have more than 2 args");
                 }
 
                 cfg_.send_to = { parse_addr(args[++i]), parse_port(args[++i]) };
@@ -67,7 +68,7 @@ namespace utils {
             cfg_.status = SENDER;
         }
         else {
-            handler();
+            handler("no configs");
         }
     }
 

@@ -1,5 +1,5 @@
-#include "core/core.hpp"
-#include "utils/utils.hpp"
+#include "core.hpp"
+#include "utils.hpp"
 #include <chrono>
 #include <cstdio>
 #include <mutex>

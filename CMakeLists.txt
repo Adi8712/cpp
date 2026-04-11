@@ -15,12 +15,30 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(syncnode src/utils/utils.cpp src/core/core.cpp src/app/main.cpp)
+# generic target
+add_library(build_options INTERFACE)
 
-target_include_directories(syncnode PRIVATE src)
+target_compile_options(build_options INTERFACE
+    -Wall -Wextra -Wpedantic -Wshadow -Wconversion
+    $<$<CONFIG:Debug>:-g>
+    $<$<CONFIG:Release>:-O3>
+)
 
-target_compile_options(syncnode
-   PRIVATE
-   -Wall -Wextra -Wpedantic -Wshadow -Wconversion
-   $<$<CONFIG:Debug>:-g>
-   $<$<CONFIG:Release>:-O3>)
+# utils
+add_library(utils src/utils/utils.cpp)
+target_include_directories(utils PUBLIC src/utils)
+target_link_libraries(utils PRIVATE build_options)
+
+# core
+add_library(core src/core/core.cpp)
+target_include_directories(core PUBLIC src/core)
+target_link_libraries(core PRIVATE build_options)
+
+# main
+add_executable(syncnode src/app/main.cpp)
+
+target_link_libraries(syncnode
+    PRIVATE
+    core
+    utils
+)

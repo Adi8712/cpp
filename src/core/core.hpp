@@ -22,6 +22,7 @@
 #define ERR_READING -4
 #define ERR_WRITING -5
 
+// exit-strategy only for system-level irrecoverable errors
 #define LOGGER(macro) do { \
     fprintf(stderr, "%s\t%s\t%s:%d\n", strerror(errno), #macro, __FILE__, __LINE__); \
     exit(macro); \
