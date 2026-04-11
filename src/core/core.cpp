@@ -17,9 +17,9 @@
 #include <unistd.h>
 
 namespace core {
-    std::mutex MySocket::mtx;
+    std::mutex              MySocket::mtx;
     std::condition_variable MySocket::cv;
-    bool MySocket::run = false;
+    bool                    MySocket::run = false;
 
     MySocket::MySocket(int family, sa_family_t type, in_port_t port, in_addr_t address) {
         if (type != SOCK_DGRAM) {
@@ -32,13 +32,13 @@ namespace core {
         }
 
         std::memset(&addr, 0, sizeof(addr));
-        addr.sin_family = DOMAIN;
-        addr.sin_port = port;
+        addr.sin_family      = DOMAIN;
+        addr.sin_port        = port;
         addr.sin_addr.s_addr = address;
     }
 
     void MySocket::listener() {
-        if (bind(sfd, (struct sockaddr*) &addr, sizeof(addr)) == -1) {
+        if (bind(sfd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
             LOGGER(ERR_BIND);
         }
 
@@ -48,12 +48,13 @@ namespace core {
         }
         cv.notify_one();
 
-        sockaddr sender_addr;
+        sockaddr  sender_addr;
         socklen_t sender_addr_len = sizeof(sender_addr);
 
         while (true) {
             char buf[32];
-            if(recvfrom(sfd, buf, 32, 0, (struct sockaddr*) &sender_addr, &sender_addr_len)== -1) {
+            if (recvfrom(sfd, buf, 32, 0, (struct sockaddr *)&sender_addr, &sender_addr_len) ==
+                -1) {
                 LOGGER(ERR_READING);
             }
 
@@ -63,7 +64,8 @@ namespace core {
             long t3 = std::chrono::steady_clock::now().time_since_epoch().count();
             std::memcpy(buf + 8, &t3, sizeof(t3));
 
-            if (sendto(sfd, buf, 32, 0, (struct sockaddr*) &sender_addr, sizeof(sender_addr)) == -1) {
+            if (sendto(sfd, buf, 32, 0, (struct sockaddr *)&sender_addr, sizeof(sender_addr)) ==
+                -1) {
                 LOGGER(ERR_WRITING);
             }
         }
@@ -71,15 +73,17 @@ namespace core {
 
     void MySocket::sender() {
         while (true) {
-            std::string t1 = std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
+            std::string t1 =
+                std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
             std::printf("T1: %s\n", t1.data());
 
-            if (sendto(sfd, t1.data(), t1.size(), 0, (struct sockaddr*) &addr, sizeof(addr)) == -1) {
+            if (sendto(sfd, t1.data(), t1.size(), 0, (struct sockaddr *)&addr, sizeof(addr)) ==
+                -1) {
                 LOGGER(ERR_WRITING);
             }
 
             char buf[32];
-            if(read(sfd, buf, 32) == -1) {
+            if (read(sfd, buf, 32) == -1) {
                 LOGGER(ERR_READING);
             }
 
@@ -104,7 +108,5 @@ namespace core {
         }
     }
 
-    MySocket::~MySocket() {
-        close(sfd);
-    }
-}
+    MySocket::~MySocket() { close(sfd); }
+} // namespace core

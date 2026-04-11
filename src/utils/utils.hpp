@@ -9,24 +9,20 @@
 #include <sys/socket.h>
 
 namespace utils {
-    enum ProgStat {
-        LISTENER,
-        SENDER,
-        BOTH
-    };
+    enum ProgStat { LISTENER, SENDER, BOTH };
 
     namespace {
         struct Target {
-            in_addr_t addr;
-            in_port_t port;
+                in_addr_t addr;
+                in_port_t port;
         };
-    }
+    } // namespace
 
     struct Config {
-        std::optional<in_port_t> listen_port;
-        std::optional<Target> send_to;
+            std::optional<in_port_t> listen_port;
+            std::optional<Target>    send_to;
 
-        ProgStat status;
+            ProgStat status;
     };
 
     class ArgParser {
@@ -34,8 +30,8 @@ namespace utils {
             Config cfg_;
 
         public:
-            explicit ArgParser(int, char* []);
+            explicit ArgParser(int, char *[]);
 
-            [[nodiscard]] const Config& config() const& noexcept;
+            [[nodiscard]] const Config &config() const & noexcept;
     };
-}
+} // namespace utils
